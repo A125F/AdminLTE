@@ -241,134 +241,75 @@ $(function () {
       ],
     },
     options: {
-      tooltips: {
-        enabled: true,
-        itemSort: function (a, b) {
-          return b.datasetIndex - a.datasetIndex;
-        },
-        mode: "x-axis",
-        callbacks: {
-          title: function (tooltipItem) {
-            var label = tooltipItem[0].xLabel;
-            var time = new Date(label);
-            var fromDate =
-              time.getFullYear() +
-              "-" +
-              utils.padNumber(time.getMonth() + 1) +
-              "-" +
-              utils.padNumber(time.getDate());
-            var fromTime =
-              utils.padNumber(time.getHours()) +
-              ":" +
-              utils.padNumber(time.getMinutes()) +
-              ":" +
-              utils.padNumber(time.getSeconds());
-            time = new Date(time.valueOf() + 1000 * interval);
-            var untilDate =
-              time.getFullYear() +
-              "-" +
-              utils.padNumber(time.getMonth() + 1) +
-              "-" +
-              utils.padNumber(time.getDate());
-            var untilTime =
-              utils.padNumber(time.getHours()) +
-              ":" +
-              utils.padNumber(time.getMinutes()) +
-              ":" +
-              utils.padNumber(time.getSeconds());
-
-            if (fromDate === untilDate) {
-              // Abbreviated form for intervals on the same day
-              // We split title in two lines on small screens
-              if ($(window).width() < 992) {
-                untilTime += "\n";
-              }
-
-              return ("Queries from " + fromTime + " to " + untilTime + " on " + fromDate).split(
-                "\n "
-              );
-            }
-
-            // Full tooltip for intervals spanning more than one day
-            // We split title in two lines on small screens
-            if ($(window).width() < 992) {
-              fromDate += "\n";
-            }
-
-            return (
-              "Queries from " +
-              fromDate +
-              " " +
-              fromTime +
-              " to " +
-              untilDate +
-              " " +
-              untilTime
-            ).split("\n ");
-          },
-          label: function (tooltipItems, data) {
-            if (tooltipItems.datasetIndex === 0) {
-              var percentage = 0;
-              var permitted = parseInt(data.datasets[1].data[tooltipItems.index], 10);
-              var blocked = parseInt(data.datasets[0].data[tooltipItems.index], 10);
-              if (permitted + blocked > 0) {
-                percentage = (100 * blocked) / (permitted + blocked);
-              }
-
-              return (
-                data.datasets[tooltipItems.datasetIndex].label +
-                ": " +
-                tooltipItems.yLabel +
-                " (" +
-                percentage.toFixed(1) +
-                "%)"
-              );
-            }
-
-            return data.datasets[tooltipItems.datasetIndex].label + ": " + tooltipItems.yLabel;
-          },
-        },
-      },
+      responsive: true,
       plugins: {
         legend: {
           display: false,
         },
+        tooltip: {
+          enabled: true,
+          mode: "index",
+          itemSort: function (a, b) {
+            return b.datasetIndex - a.datasetIndex;
+          },
+          callbacks: {
+            label: function (context) {
+              var label = context.dataset.label;
+              if (context.datasetIndex === 0) {
+                var percentage = 0;
+                var permitted = parseInt(context.parsed._stacks.y[1], 10);
+                var blocked = parseInt(context.parsed._stacks.y[0], 10);
+                if (permitted + blocked > 0) {
+                  percentage = (100 * blocked) / (permitted + blocked);
+                }
+
+                label += ": " + context.parsed.y + " (" + percentage.toFixed(1) + "%)"
+
+              } else {
+                label += ": " + context.parsed.y
+              }
+              return label;
+            },
+          },
+        },
       },
       scales: {
         xAxes:
-          {
-            type: "time",
-            stacked: true,
-            time: {
-              unit: "hour",
-              displayFormats: {
-                minute: "HH:mm",
-                hour: "HH:mm",
-                day: "MMM DD",
-                week: "MMM DD",
-                month: "MMM",
-                quarter: "YYYY MMM",
-                year: "YYYY",
-              },
-            },
-            grid: {
-              color: gridColor,
-            },
-            ticks: {
-              fontColor: ticksColor,
+        {
+          type: "time",
+          stacked: true,
+          offset: false,
+          time: {
+            unit: "hour",
+            displayFormats: {
+              minute: "HH:mm",
+              hour: "HH:mm",
+              day: "MMM DD",
+              week: "MMM DD",
+              month: "MMM",
+              quarter: "YYYY MMM",
+              year: "YYYY",
             },
           },
+          grid: {
+            color: gridColor,
+            offset: false,
+          },
+          ticks: {
+            fontColor: ticksColor,
+          },
+        },
         yAxes:
-          {
-            stacked: true,
-            beginAtZero: true,
-            ticks: {
-              fontColor: ticksColor,
-            },
-            grid: {
-              color: gridColor,
-            },
+        {
+          stacked: true,
+          beginAtZero: true,
+          ticks: {
+            fontColor: ticksColor,
           },
+          grid: {
+            color: gridColor,
+          },
+        },
       },
       elements: {
         line: {
