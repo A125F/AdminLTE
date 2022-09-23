@@ -329,8 +329,10 @@ $(function () {
           },
         },
       },
-      legend: {
-        display: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
       },
       scales: {
         xAxes:
@@ -349,7 +351,7 @@ $(function () {
                 year: "YYYY",
               },
             },
-            gridLines: {
+            grid: {
               color: gridColor,
             },
             ticks: {
@@ -363,7 +365,7 @@ $(function () {
             ticks: {
               fontColor: ticksColor,
             },
-            gridLines: {
+            grid: {
               color: gridColor,
             },
           },

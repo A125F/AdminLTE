@@ -933,8 +933,10 @@ $(function () {
           },
         },
       },
-      legend: {
-        display: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
       },
       scales: {
         xAxes:
@@ -948,7 +950,7 @@ $(function () {
               },
               tooltipFormat: "HH:mm",
             },
-            gridLines: {
+            grid: {
               color: gridColor,
             },
             ticks: {
@@ -963,7 +965,7 @@ $(function () {
               fontColor: ticksColor,
               precision: 0,
             },
-            gridLines: {
+            grid: {
               color: gridColor,
             },
           },
@@ -1016,8 +1018,10 @@ $(function () {
             },
           },
         },
-        legend: {
-          display: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
         },
         scales: {
           xAxes:
@@ -1031,7 +1035,7 @@ $(function () {
                 },
                 tooltipFormat: "HH:mm",
               },
-              gridLines: {
+              grid: {
                 color: gridColor,
               },
               ticks: {
@@ -1046,7 +1050,7 @@ $(function () {
                 precision: 0,
               },
               stacked: true,
-              gridLines: {
+              grid: {
                 color: gridColor,
               },
             },
@@ -1128,8 +1132,10 @@ $(function () {
             borderColor: $(".box").css("background-color"),
           },
         },
-        legend: {
-          display: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
         },
         tooltips: {
           enabled: false,
@@ -1168,8 +1174,10 @@ $(function () {
             borderColor: $(".box").css("background-color"),
           },
         },
-        legend: {
-          display: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
         },
         tooltips: {
           enabled: false,
