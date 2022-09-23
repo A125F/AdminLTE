@@ -120,25 +120,25 @@ function updateQueriesOverTime() {
 
   interval = computeInterval(from, until);
   // Default displaying axis scaling
-  timeLineChart.options.scales.xAxes[0].time.unit = "hour";
+  timeLineChart.options.scales.xAxes.time.unit = "hour";
 
   var duration = until - from;
   // Xaxis scaling based on selected daterange
   if (duration > 4 * 365 * 24 * 60 * 60) {
     // If the requested data is more than 4 years, set ticks interval to year
-    timeLineChart.options.scales.xAxes[0].time.unit = "year";
+    timeLineChart.options.scales.xAxes.time.unit = "year";
   } else if (duration >= 366 * 24 * 60 * 60) {
     // If the requested data is more than 1 year, set ticks interval to quarter
-    timeLineChart.options.scales.xAxes[0].time.unit = "quarter";
+    timeLineChart.options.scales.xAxes.time.unit = "quarter";
   } else if (duration >= 92 * 24 * 60 * 60) {
     // If the requested data is more than 3 months, set ticks interval to months
-    timeLineChart.options.scales.xAxes[0].time.unit = "month";
+    timeLineChart.options.scales.xAxes.time.unit = "month";
   } else if (duration >= 31 * 24 * 60 * 60) {
     // If the requested data is 1 month or more, set ticks interval to weeks
-    timeLineChart.options.scales.xAxes[0].time.unit = "week";
+    timeLineChart.options.scales.xAxes.time.unit = "week";
   } else if (duration > 3 * 24 * 60 * 60) {
     // If the requested data is more than 3 days (72 hours), set ticks interval to days
-    timeLineChart.options.scales.xAxes[0].time.unit = "day";
+    timeLineChart.options.scales.xAxes.time.unit = "day";
   }
 
   $.getJSON(
@@ -196,7 +196,7 @@ function updateQueriesOverTime() {
         }
       }
 
-      timeLineChart.options.scales.xAxes[0].display = true;
+      timeLineChart.options.scales.xAxes.display = true;
       $("#queries-over-time .overlay").hide();
       timeoutWarning.hide();
       timeLineChart.update();
@@ -333,7 +333,7 @@ $(function () {
         display: false,
       },
       scales: {
-        xAxes: [
+        xAxes:
           {
             type: "time",
             stacked: true,
@@ -351,25 +351,22 @@ $(function () {
             },
             gridLines: {
               color: gridColor,
-              zeroLineColor: gridColor,
             },
             ticks: {
               fontColor: ticksColor,
             },
           },
-        ],
-        yAxes: [
+        yAxes:
           {
             stacked: true,
+            beginAtZero: true,
             ticks: {
-              beginAtZero: true,
               fontColor: ticksColor,
             },
             gridLines: {
               color: gridColor,
             },
           },
-        ],
       },
       elements: {
         line: {
